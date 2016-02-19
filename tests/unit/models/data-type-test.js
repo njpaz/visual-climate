@@ -1,7 +1,8 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-moduleForModel('weather-datum', 'Unit | Model | weather datum', {
-  needs: ['model:data-set', 'model:station', 'model:data-type']
+moduleForModel('data-type', 'Unit | Model | data type', {
+  // Specify the other units that are required for this test.
+  needs: []
 });
 
 test('it exists', function(assert) {

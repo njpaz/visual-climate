@@ -1,0 +1,5 @@
+<select class='browser-default' onchange={{action (mut selected) value="target.value"}}>
+  {{#each content as |item|}}
+    <option value='{{item.value}}' selected={{is-equal selected item}}>{{item.label}}</option>
+  {{/each}}
+</select>

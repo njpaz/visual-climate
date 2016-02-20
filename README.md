@@ -1,7 +1,6 @@
-# Visual-climate
+# Visual Climate
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+The frontend for Visual Climate. Install and run this repo, then clone the [Visual Climate API](https://github.com/njpaz/visual-climate-api) and follow the instructions in its README.
 
 ## Prerequisites
 
@@ -12,6 +11,7 @@ You will need the following things properly installed on your computer.
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
 * [PhantomJS](http://phantomjs.org/)
+* [Redis](http://redis.io/)
 
 ## Installation
 
@@ -23,7 +23,8 @@ You will need the following things properly installed on your computer.
 ## Running / Development
 
 * `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+
+This adds the appropriate key/pair to Redis.
 
 ### Code Generators
 

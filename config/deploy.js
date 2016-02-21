@@ -20,5 +20,35 @@ module.exports = function(deployTarget) {
     };
   }
 
+  if (deployTarget === 'production') {
+    ENV.build = {
+      environment: 'production'
+    };
+
+    ENV.pipeline = {
+      activateOnDeploy: true
+    };
+
+    ENV['ssh-tunnel'] = {
+      username: process.env['SSH_USERNAME'],
+      host: process.env['REDIS_HOST'],
+      srcPort: process.env['REDIS_PORT']
+    };
+
+    ENV.redis = {
+      keyPrefix: 'visual-climate',
+      allowOverwrite: true,
+      host: 'localhost',
+      port: process.env['REDIS_PORT']
+    };
+
+    ENV.s3 = {
+      accessKeyId: process.env['AWS_ACCESS_KEY'],
+      secretAccessKey: process.env['AWS_SECRET_KEY'],
+      bucket: 'visual-climate-production',
+      region: 'us-west-2'
+    };
+  }
+
   return ENV;
 };

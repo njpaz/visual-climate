@@ -12,7 +12,10 @@ module.exports = function(defaults) {
   switch (env) {
     case 'development':
       fingerprintOptions.prepend = 'http://localhost:4200/';
-    break;
+      break;
+    case 'production':
+      fingerprintOptions.prepend = 'https://s3-us-west-2.amazonaws.com/visual-climate-production/';
+      break;
   }
 
   var app = new EmberApp(defaults, {

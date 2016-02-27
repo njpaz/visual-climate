@@ -26,9 +26,7 @@ You will need the following things properly installed on your computer.
 
 This adds the appropriate key/pair to Redis.
 
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
+* `rails s` in the [API](https://github.com/njpaz/visual-climate-api).
 
 ### Running Tests
 
@@ -42,7 +40,7 @@ Make use of the many generators for code, try `ember help generate` for more det
 
 ### Deploying
 
-Specify what it takes to deploy your app.
+* `ember deploy production`
 
 ## Further Reading / Useful Links
 

@@ -3,8 +3,30 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   data: Ember.computed.alias('model.data'),
   dataTypes: Ember.computed.alias('model.dataTypes'),
-  sorting: ['date:asc'],
-  sortedData: Ember.computed.sort('data', 'sorting'),
+  stations: Ember.computed.alias('model.stations'),
+
+  title: Ember.computed('selectedStation.titlecase_name', function() {
+    var selectedStation = this.get('stations').findBy('id', this.get('selectedStation'));
+    var stationName = selectedStation.get('titlecase_name');
+
+    return 'Monthly Temperatures at ' + stationName;
+  }),
+
+  dataSorting: ['date:asc'],
+  sortedData: Ember.computed.sort('data', 'dataSorting'),
+
+  stationSorting: ['name:asc'],
+  sortedStations: Ember.computed.sort('stations', 'stationSorting'),
+
+  selectedStation: Ember.computed('sortedStations.[]', {
+    get() {
+      return this.get('sortedStations.firstObject.id');
+    },
+
+    set(key, value) {
+      return value;
+    }
+  }),
 
   selectedOption: 'in_fahrenheit',
   selectOptions: [{
@@ -35,12 +57,13 @@ export default Ember.Controller.extend({
     return options;
   }),
 
-  chartData: Ember.computed('sortedData.[]', 'selectedOption', function() {
+  chartData: Ember.computed('sortedData.[]', 'selectedOption', 'selectedStation', function() {
     var data = this.get('sortedData');
     var selectedOption = this.get('selectedOption');
+    var stationId = this.get('selectedStation');
 
-    var minTemps = data.filter(function(datum) { return datum.get('data_type.id') === '384'; });
-    var maxTemps = data.filter(function(datum) { return datum.get('data_type.id') === '386'; });
+    var minTemps = data.filter(function(datum) { return datum.get('data_type.id') === '384' && datum.get('station.id') === stationId; });
+    var maxTemps = data.filter(function(datum) { return datum.get('data_type.id') === '386' && datum.get('station.id') ===  stationId; });
 
     var minDataValues = minTemps.map(function(datum) {
       return [datum.get('date').getTime(), datum.get(selectedOption)];

@@ -19,6 +19,13 @@ module.exports = function(environment) {
     },
     sassOptions: {
       includePaths: ['bower_components/materialize/sass']
+    },
+    contentSecurityPolicyHeader: 'Access-Control-Allow-Origin',
+    contentSecurityPolicy: {
+      'default-src': ["'none'"],
+      'script-src': ["'self'", "localhost:4200"],
+      'style-src': ["'self'", "'unsafe-inline'", "localhost:4200"],
+      'font-src': ["'self'", "localhost:4200"]
     }
   };
 

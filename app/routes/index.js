@@ -3,9 +3,9 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   model: function() {
     return Ember.RSVP.hash({
-      data: this.store.query('weather-datum', { station_id: [96154, 39153], data_type_id: [384, 386] }),
-      stations: this.store.query('station', { id: [96154, 39153] }),
-      dataTypes: this.store.query('data-type', { id: [384, 386] })
+      data: this.store.query('weather-datum', { station_identifier: ['GHCND:AYM00089606', 'GHCND:USC00042319'], data_type_identifier: ['EMNT', 'EMXT'] }),
+      stations: this.store.query('station', { identifier: ['GHCND:AYM00089606', 'GHCND:USC00042319']}),
+      dataTypes: this.store.query('data-type', { identifier: ['EMNT', 'EMXT'] })
     });
   }
 });

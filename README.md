@@ -22,11 +22,8 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember server`
-
-This adds the appropriate key/pair to Redis.
-
-* `rails s` in the [API](https://github.com/njpaz/visual-climate-api).
+* `ember server --proxy http://localhost:3000`
+* Clone and run the [API](https://github.com/njpaz/visual-climate-api) (`rails s`)
 
 ### Running Tests
 

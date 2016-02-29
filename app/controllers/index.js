@@ -62,8 +62,8 @@ export default Ember.Controller.extend({
     var selectedOption = this.get('selectedOption');
     var stationId = this.get('selectedStation');
 
-    var minTemps = data.filter(function(datum) { return datum.get('data_type.id') === '384' && datum.get('station.id') === stationId; });
-    var maxTemps = data.filter(function(datum) { return datum.get('data_type.id') === '386' && datum.get('station.id') ===  stationId; });
+    var minTemps = data.filter(function(datum) { return datum.get('data_type.identifier') === 'EMNT' && datum.get('station.id') === stationId; });
+    var maxTemps = data.filter(function(datum) { return datum.get('data_type.identifier') === 'EMXT' && datum.get('station.id') ===  stationId; });
 
     var minDataValues = minTemps.map(function(datum) {
       return [datum.get('date').getTime(), datum.get(selectedOption)];

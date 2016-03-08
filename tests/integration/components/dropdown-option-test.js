@@ -15,7 +15,7 @@ test('it renders', function(assert) {
 });
 
 test('it displays the custom option path properties', function(assert) {
-  var item = {label: 'Option Label', value: 'option_value'};
+  let item = {label: 'Option Label', value: 'option_value'};
 
   this.set('item', item);
   this.render(hbs`{{dropdown-option item=item optionValuePath='value' optionLabelPath='label'}}`);

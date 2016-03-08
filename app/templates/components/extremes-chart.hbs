@@ -1,0 +1,24 @@
+<div class='container'>
+  <div class='row'>
+    <div class='col s12'>
+      {{#md-card title=title
+        titleClass="orange-text"}}
+
+        {{#md-card-content}}
+          <div class='row'>
+            <div class='col s12'><em>Choose the station and value type.</em></div>
+            <div class='col s3'>
+              {{ember-dropdown content=sortedStations optionValuePath='id' optionLabelPath='titlecase_name' selected=(mut selectedStation)}}
+            </div>
+            <div class='col s3'>
+              {{ember-dropdown content=selectValues optionValuePath='value' optionLabelPath='label' selected=(mut selectedValue)}}
+            </div>
+            <div class='col s12'>
+              {{highcharts-chart chartData=chartData chartOptions=chartOptions}}
+            </div>
+          </div>
+        {{/md-card-content}}
+      {{/md-card}}
+    </div>
+  </div>
+</div>

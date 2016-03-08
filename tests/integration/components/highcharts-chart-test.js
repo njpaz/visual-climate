@@ -11,5 +11,5 @@ test('it renders', function(assert) {
 
   this.render(hbs`{{highcharts-chart}}`);
 
-  assert.equal(this.$().text().trim(), 'Created with Highcharts 4.2.3Highcharts.com');
+  assert.equal(this.$().text().trim(), 'Created with Highcharts 4.2.3Chart titleHighcharts.com');
 });

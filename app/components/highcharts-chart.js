@@ -5,18 +5,8 @@ export default Ember.Component.extend({
   chartOptions: {},
 
   setChart: Ember.observer('chartOptions.@each', 'chartData.@each', function() {
-    var chart = {
-      chart: {
-        type: 'spline'
-      },
-      title: {
-        text: null
-      },
-      series: this.get('chartData')
-    };
-
-    chart = Ember.merge(chart, this.get('chartOptions'));
-
+    let chart = this.get('chartOptions');
+    chart.series = this.get('chartData');
     this.$().highcharts(chart);
   }).on('didInsertElement')
 });

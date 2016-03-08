@@ -7,22 +7,22 @@ export default Ember.Component.extend({
   optionLabelPath: '',
 
   value: Ember.computed('item', function() {
-    var valuePath = this.get('optionValuePath');
+    let valuePath = this.get('optionValuePath');
 
     if (!Ember.isEmpty('optionValuePath')) {
-      valuePath = '.' + valuePath;
+      valuePath = `.${valuePath}`;
     }
 
-    return this.get('item' + valuePath);
+    return this.get(`item${valuePath}`);
   }),
 
   label: Ember.computed('item', function() {
-    var labelPath = this.get('optionLabelPath');
+    let labelPath = this.get('optionLabelPath');
 
     if (!Ember.isEmpty('optionValuePath')) {
-      labelPath = '.' + labelPath;
+      labelPath = `.${labelPath}`;
     }
 
-    return this.get('item' + labelPath);
+    return this.get(`item${labelPath}`);
   })
 });

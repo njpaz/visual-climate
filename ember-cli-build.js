@@ -25,6 +25,9 @@ module.exports = function(defaults) {
       configFile: 'config/deploy.js',
       shouldActivate: true,
     },
+    sassOptions: {
+      includePaths: ['bower_components/materialize/sass']
+    }
   });
 
   app.import('bower_components/highcharts/highcharts.js');

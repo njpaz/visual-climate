@@ -77,6 +77,12 @@ export default Ember.Component.extend({
         .y(function(d) { return y(d.value); })
         .interpolate('basis');
 
+    let tip = d3.select('body').append('div')
+        .attr('class', 'tooltip')
+        .style('opacity', 0);
+
+    let formatTime = d3.time.format('%b %Y');
+
     chartData.forEach(function(ad) {
       chart.append('path')
           .attr('d', line(ad.data))
@@ -84,6 +90,29 @@ export default Ember.Component.extend({
           .attr('stroke-width', 2)
           .attr('fill', 'none');
 
+      chart.selectAll('dot')
+          .data(ad.data)
+        .enter().append('circle')
+          .attr('r', 3.5)
+          .attr('cx', function(d) { return x(d.date); })
+          .attr('cy', function(d) { return y(d.value); })
+          .on('mouseover', function(d) {
+            let formattedTip = `<strong>${formatTime(d.date)}</strong><br />${d.value}°`;
+            let leftTipPad = 14;
+            let topTipPad = 28;
+
+            tip.transition()
+                .duration(200)
+                .style('opacity', .9);
+            tip.html(formattedTip)
+                .style('left', (d3.event.pageX + leftTipPad) + 'px')
+                .style('top', (d3.event.pageY - topTipPad) + 'px');
+          })
+          .on('mouseout', function(d) {
+            tip.transition()
+                .duration(500)
+                .style('opacity', 0);
+          });
     });
   }
 });

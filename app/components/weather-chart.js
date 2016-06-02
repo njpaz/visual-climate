@@ -7,8 +7,14 @@ export default Ember.Component.extend({
   stationSorting: ['name:asc'],
   sortedStations: Ember.computed.sort('stations', 'stationSorting'),
 
-  selectedValue: 'in_celsius',
+  selectedValue: 'in_fahrenheit',
   selectedStation: Ember.computed.alias('sortedStations.firstObject.id'),
+
+  selectValues: [{
+    value: 'in_fahrenheit', label: 'Fahrenheit'
+  }, {
+    value: 'in_celsius', label: 'Celsius'
+  }],
 
   chartData: Ember.computed('sortedData.[]', 'selectedValue', 'selectedStation', function() {
     const EXTREME_MIN_TEMP = 'EMNT';

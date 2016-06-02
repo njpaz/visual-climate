@@ -1,1 +1,21 @@
-{{visual-chart chartData=chartData sortedStations=sortedStations sortedData=sortedData}}
+<div class='container'>
+  <div class='row'>
+    <div class='col s12'>
+      {{#md-card title=title
+        titleClass="orange-text"}}
+
+        {{#md-card-content}}
+          <div class='row'>
+            <div class='col s12'><em>Choose the station and value type.</em></div>
+            <div class='col s3'>
+              {{ember-dropdown content=selectValues optionValuePath='value' optionLabelPath='label' selected=(mut selectedValue)}}
+            </div>
+            <div class='col s12'>
+              {{visual-chart chartData=chartData}}
+            </div>
+          </div>
+        {{/md-card-content}}
+      {{/md-card}}
+    </div>
+  </div>
+</div>

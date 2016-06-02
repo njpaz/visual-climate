@@ -8,13 +8,31 @@ export default Ember.Component.extend({
   sortedStations: Ember.computed.sort('stations', 'stationSorting'),
 
   selectedValue: 'in_fahrenheit',
-  selectedStation: Ember.computed.alias('sortedStations.firstObject.id'),
+  selectedStation: Ember.computed('sortedStations.[]', {
+    get() {
+      return this.get('sortedStations.firstObject.id');
+    },
 
+    set(key, value) {
+      return value;
+    }
+  }),
   selectValues: [{
     value: 'in_fahrenheit', label: 'Fahrenheit'
   }, {
     value: 'in_celsius', label: 'Celsius'
   }],
+
+  title: Ember.computed('selectedStation.titlecase_name', function() {
+    let selectedStation = this.get('sortedStations').findBy('id', this.get('selectedStation'));
+
+    if (Ember.isEmpty(selectedStation)) {
+      return 'Monthly Temperatures';
+    } else {
+      let stationName = selectedStation.get('titlecase_name');
+      return `Monthly Temperatures at ${stationName}`;
+    }
+  }),
 
   chartData: Ember.computed('sortedData.[]', 'selectedValue', 'selectedStation', function() {
     const EXTREME_MIN_TEMP = 'EMNT';

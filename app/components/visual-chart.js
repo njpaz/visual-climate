@@ -58,7 +58,6 @@ export default Ember.Component.extend({
     let margins = this.get('margins');
     let width = this.get('width');
     let height = this.get('height');
-    let chartData = this.get('chartData');
 
     let tip = d3.select('body').append('div')
         .attr('class', 'tooltip')
@@ -128,6 +127,7 @@ export default Ember.Component.extend({
 
     chartData.forEach(function(ad) {
       chart.append('path')
+          .attr('class', 'data-line')
           .attr('d', line(ad.data))
           .attr('stroke', ad.color)
           .attr('stroke-width', 2)
@@ -146,12 +146,12 @@ export default Ember.Component.extend({
 
             tip.transition()
                 .duration(200)
-                .style('opacity', .9);
+                .style('opacity', 0.9);
             tip.html(formattedTip)
                 .style('left', (d3.event.pageX + leftTipPad) + 'px')
                 .style('top', (d3.event.pageY - topTipPad) + 'px');
           })
-          .on('mouseout', function(d) {
+          .on('mouseout', function() {
             tip.transition()
                 .duration(500)
                 .style('opacity', 0);

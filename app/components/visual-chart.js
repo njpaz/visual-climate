@@ -27,10 +27,13 @@ export default Ember.Component.extend({
     chart.selectAll('g.axis').remove();
     chart.selectAll('path').remove();
     chart.selectAll('circle').remove();
+    chart.selectAll('.axis-label').remove();
 
-    this._initChart();
-    this._setChartAxes();
-    this._populateChart();
+    Ember.run.once(() => {
+      this._initChart();
+      this._setChartAxes();
+      this._populateChart();
+    });
   }),
 
   chartDates: Ember.computed('chartData.@each.data', function() {
@@ -52,6 +55,16 @@ export default Ember.Component.extend({
 
       return reducedValues;
     }, []);
+  }),
+  labelText: Ember.computed('selectedValueLabel', function() {
+    let valueLabel = this.get('selectedValueLabel');
+    let labelText = 'Temperatures';
+
+    if (valueLabel) {
+      labelText += ` (in °${valueLabel.charAt(0)})`;
+    }
+
+    return labelText;
   }),
   formatTime: Ember.computed(function() {
     return d3.time.format('%b %Y');
@@ -89,6 +102,7 @@ export default Ember.Component.extend({
     let margins = this.get('margins');
     let width = this.get('width');
     let height = this.get('height');
+    let labelText = this.get('labelText');
 
     let x = d3.time.scale()
         .domain([d3.min(chartDates), d3.max(chartDates)])
@@ -119,7 +133,7 @@ export default Ember.Component.extend({
         .attr('x', 0 - (height / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')
-        .text('Temperatures');
+        .text(labelText);
 
     chart.append('g')
         .attr('class', 'x axis')
@@ -158,7 +172,7 @@ export default Ember.Component.extend({
         .attr('y', function(d, i) { return i * (legendBoxDimension * 2); })
         .attr('width', legendBoxDimension)
         .attr('height', legendBoxDimension)
-        .style('fill', function(d) { return d.color; });
+        .attr('fill', function(d) { return d.color; });
 
     legend.selectAll('text')
         .data(chartData)
@@ -171,7 +185,7 @@ export default Ember.Component.extend({
       chart.append('path')
           .attr('class', 'data-line')
           .attr('d', line(ad.data))
-          .style('stroke', ad.color);
+          .attr('stroke', ad.color);
 
       chart.selectAll('dot')
           .data(ad.data)

@@ -17,6 +17,13 @@ export default Ember.Component.extend({
       return value;
     }
   }),
+  selectedValueLabel: Ember.computed('selectedValue', function() {
+    let selectedValue = this.get('selectedValue');
+    let value = this.get('selectValues').findBy('value', selectedValue);
+    if (value) {
+      return value.label;
+    }
+  }),
   selectValues: [{
     value: 'in_fahrenheit', label: 'Fahrenheit'
   }, {

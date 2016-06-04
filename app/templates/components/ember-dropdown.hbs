@@ -1,4 +1,4 @@
-<select class='browser-default' onchange={{action (mut selected) value="target.value"}}>
+<select class="form-control" onchange={{action (mut selected) value='target.value'}}>
   {{#each content as |item|}}
     {{dropdown-option optionValuePath=optionValuePath optionLabelPath=optionLabelPath item=item selected=(is-equal selected item)}}
   {{/each}}

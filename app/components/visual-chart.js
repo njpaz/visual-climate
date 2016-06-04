@@ -5,7 +5,7 @@ export default Ember.Component.extend({
   tagName: 'svg',
   width: 1000,
   height: 500,
-  margins: {top: 20, right: 20, bottom: 20, left: 50},
+  margins: {top: 20, right: 20, bottom: 20, left: 25},
   chart: null,
   chartX: null,
   chartY: null,
@@ -129,7 +129,7 @@ export default Ember.Component.extend({
     chart.append('text')
         .attr('class', 'y axis-label')
         .attr('transform', 'rotate(-90)')
-        .attr('y', 0)
+        .attr('y', (0 - margins.left))
         .attr('x', 0 - (height / 2))
         .attr('dy', '1em')
         .style('text-anchor', 'middle')

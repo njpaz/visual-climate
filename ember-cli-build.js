@@ -24,11 +24,10 @@ module.exports = function(defaults) {
       runOnPostBuild: (env === 'development') ? 'development-postbuild' : false,
       configFile: 'config/deploy.js',
       shouldActivate: true,
-    },
-    sassOptions: {
-      includePaths: ['bower_components/materialize/sass']
     }
   });
+
+  app.import('vendor/bootswatch-bootstrap.min.css');
 
   return app.toTree();
 };

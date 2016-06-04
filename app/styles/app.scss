@@ -1,6 +1,4 @@
-$roboto-font-path: '../assets/';
-@import "materialize";
-@import 'ember-cli-materialize';
+body { padding-top: 70px; } // for Bootstrap
 
 .axis path,
 .axis line {
@@ -16,12 +14,12 @@ $roboto-font-path: '../assets/';
 }
 
 .axis text {
-  font-family: Helvetica, sans-serif;
+  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 13px;
 }
 
 .axis-label {
-  font-family: Helvetica, sans-serif;
+  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 
 .data-line {

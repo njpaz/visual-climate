@@ -2,7 +2,7 @@ import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
 
 moduleForComponent('weather-chart', 'Unit | Component | weather chart', {
-  needs: ['component:md-card', 'component:md-card-content', 'component:ember-dropdown', 'component:visual-chart'],
+  needs: ['component:ember-dropdown', 'component:visual-chart'],
   unit: true
 });
 

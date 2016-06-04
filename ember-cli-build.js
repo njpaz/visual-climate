@@ -30,7 +30,5 @@ module.exports = function(defaults) {
     }
   });
 
-  app.import('bower_components/highcharts/highcharts.js');
-
   return app.toTree();
 };

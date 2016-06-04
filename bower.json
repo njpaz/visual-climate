@@ -7,7 +7,6 @@
     "materialize": "0.97.6"
   },
   "devDependencies": {
-    "highcharts": "^4.2.3"
   },
   "resolutions": {
     "ember-qunit-notifications": "0.1.0",

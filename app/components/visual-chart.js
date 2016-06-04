@@ -14,9 +14,11 @@ export default Ember.Component.extend({
   chartLegend: null,
 
   didInsertElement() {
-    this._initChart();
-    this._setChartAxes();
-    this._populateChart();
+    Ember.run.once('afterRender', () => {
+      this._initChart();
+      this._setChartAxes();
+      this._populateChart();
+    });
   },
 
   resetChartOnDataChange: Ember.observer('chartData.@each.data', function() {
@@ -144,8 +146,8 @@ export default Ember.Component.extend({
         .attr('y', function(d, i) { return i * (legendBoxDimension * 2); })
         .attr('width', legendBoxDimension)
         .attr('height', legendBoxDimension)
-        .attr('stroke', 'none')
-        .attr('fill', function(d) { return d.color; });
+        .style('stroke', 'none')
+        .style('fill', function(d) { return d.color; });
 
     legend.selectAll('text')
         .data(chartData)
@@ -158,9 +160,9 @@ export default Ember.Component.extend({
       chart.append('path')
           .attr('class', 'data-line')
           .attr('d', line(ad.data))
-          .attr('stroke', ad.color)
-          .attr('stroke-width', 2)
-          .attr('fill', 'none');
+          .style('stroke', ad.color)
+          .style('stroke-width', 2)
+          .style('fill', 'none');
 
       chart.selectAll('dot')
           .data(ad.data)
@@ -168,10 +170,13 @@ export default Ember.Component.extend({
           .attr('r', 3.5)
           .attr('cx', function(d) { return x(d.date); })
           .attr('cy', function(d) { return y(d.value); })
+          .style('fill', ad.color)
           .on('mouseover', function(d) {
             let formattedTip = `<strong>${formatTime(d.date)}</strong><br />${d.value}°`;
             let leftTipPad = 14;
             let topTipPad = 28;
+
+            d3.select(this).attr('r', 7).style('opacity', 0.5);
 
             tip.transition()
                 .duration(200)
@@ -181,6 +186,8 @@ export default Ember.Component.extend({
                 .style('top', (d3.event.pageY - topTipPad) + 'px');
           })
           .on('mouseout', function() {
+            d3.select(this).attr('r', 3.5).style('opacity', 1);
+
             tip.transition()
                 .duration(500)
                 .style('opacity', 0);

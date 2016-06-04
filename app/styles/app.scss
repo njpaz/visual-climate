@@ -14,6 +14,19 @@ $roboto-font-path: '../assets/';
   stroke: #777;
   shape-rendering: crispEdges;
 }
+
+.legend {
+  stroke: #777;
+  fill: #fff;
+  stroke-width: 1;
+}
+
+.legend text {
+  font-size: 12px;
+  stroke: none;
+  fill: #777;
+}
+
 .axis text {
   font-family: Helvetica, sans-serif;
   font-size: 13px;

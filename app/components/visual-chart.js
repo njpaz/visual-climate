@@ -11,6 +11,7 @@ export default Ember.Component.extend({
   chartY: null,
   chartLine: null,
   chartTip: null,
+  chartLegend: null,
 
   didInsertElement() {
     this._initChart();
@@ -69,8 +70,15 @@ export default Ember.Component.extend({
       .append('g')
         .attr('transform', `translate(${margins.left},${margins.top})`);
 
+    let legend = chart.append('g')
+        .attr('class', 'legend')
+        .attr('width', 100)
+        .attr('height', 100)
+        .attr('transform', 'translate(-260,20)');
+
     this.set('chart', chart);
     this.set('chartTip', tip);
+    this.set('chartLegend', legend);
   },
   _setChartAxes() {
     let chart = this.get('chart');
@@ -120,10 +128,31 @@ export default Ember.Component.extend({
     let chart = this.get('chart');
     let chartData = this.get('chartData');
     let formatTime = this.get('formatTime');
+    let legend = this.get('chartLegend');
     let line = this.get('chartLine');
     let tip = this.get('chartTip');
     let x = this.get('chartX');
     let y = this.get('chartY');
+    let width = this.get('width');
+    const legendBoxDimension = 10;
+    const legendPadding = 14;
+
+    legend.selectAll('rect')
+        .data(chartData)
+      .enter().append('rect')
+        .attr('x', width / 3)
+        .attr('y', function(d, i) { return i * (legendBoxDimension * 2); })
+        .attr('width', legendBoxDimension)
+        .attr('height', legendBoxDimension)
+        .attr('stroke', 'none')
+        .attr('fill', function(d) { return d.color; });
+
+    legend.selectAll('text')
+        .data(chartData)
+      .enter().append('text')
+        .attr('x', (width / 3) + legendPadding)
+        .attr('y', function(d, i) { return (i * (legendBoxDimension * 2)) + (legendBoxDimension - 1); })
+        .text(function(d) { return d.name; });
 
     chartData.forEach(function(ad) {
       chart.append('path')

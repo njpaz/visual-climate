@@ -142,3 +142,12 @@ test('it applies the correct color to the data line', function(assert) {
 
   assert.equal(this.$('.data-line').attr('stroke'), 'blue', 'the data line is assigned the correct stroke color');
 });
+
+test('it displays a legend', function(assert) {
+  assert.expect(2);
+
+  this.render(hbs`{{visual-chart chartData=chartData}}`);
+
+  assert.equal(this.$('.legend rect').attr('fill'), 'blue', 'it displays the data color');
+  assert.equal(this.$('.legend text').text(), 'Minimum', 'it lists the data label next to the data color box');
+});

@@ -15,6 +15,20 @@ $roboto-font-path: '../assets/';
   shape-rendering: crispEdges;
 }
 
+.axis text {
+  font-family: Helvetica, sans-serif;
+  font-size: 13px;
+}
+
+.axis-label {
+  font-family: Helvetica, sans-serif;
+}
+
+.data-line {
+  stroke-width: 2;
+  fill: none;
+}
+
 .legend {
   stroke: #777;
   fill: #fff;
@@ -27,9 +41,8 @@ $roboto-font-path: '../assets/';
   fill: #777;
 }
 
-.axis text {
-  font-family: Helvetica, sans-serif;
-  font-size: 13px;
+.legend-box {
+  stroke: none;
 }
 
 .tooltip {

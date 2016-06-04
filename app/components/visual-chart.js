@@ -112,6 +112,15 @@ export default Ember.Component.extend({
         .scale(y)
         .orient('left');
 
+    chart.append('text')
+        .attr('class', 'y axis-label')
+        .attr('transform', 'rotate(-90)')
+        .attr('y', 0)
+        .attr('x', 0 - (height / 2))
+        .attr('dy', '1em')
+        .style('text-anchor', 'middle')
+        .text('Temperatures');
+
     chart.append('g')
         .attr('class', 'x axis')
         .attr('transform', `translate(0,${height})`)
@@ -138,15 +147,17 @@ export default Ember.Component.extend({
     let width = this.get('width');
     const legendBoxDimension = 10;
     const legendPadding = 14;
+    const leftTipPad = 14;
+    const topTipPad = 28;
 
     legend.selectAll('rect')
         .data(chartData)
       .enter().append('rect')
+        .attr('class', 'legend-box')
         .attr('x', width / 3)
         .attr('y', function(d, i) { return i * (legendBoxDimension * 2); })
         .attr('width', legendBoxDimension)
         .attr('height', legendBoxDimension)
-        .style('stroke', 'none')
         .style('fill', function(d) { return d.color; });
 
     legend.selectAll('text')
@@ -160,9 +171,7 @@ export default Ember.Component.extend({
       chart.append('path')
           .attr('class', 'data-line')
           .attr('d', line(ad.data))
-          .style('stroke', ad.color)
-          .style('stroke-width', 2)
-          .style('fill', 'none');
+          .style('stroke', ad.color);
 
       chart.selectAll('dot')
           .data(ad.data)
@@ -173,8 +182,6 @@ export default Ember.Component.extend({
           .style('fill', ad.color)
           .on('mouseover', function(d) {
             let formattedTip = `<strong>${formatTime(d.date)}</strong><br />${d.value}°`;
-            let leftTipPad = 14;
-            let topTipPad = 28;
 
             d3.select(this).attr('r', 7).style('opacity', 0.5);
 

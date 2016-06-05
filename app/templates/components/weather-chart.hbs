@@ -3,8 +3,11 @@
 </div>
 <div class="panel-body">
   <div class="row">
-    <div class="col-md-3 col-sm-6">
-      {{ember-dropdown content=sortedStations optionValuePath='id' optionLabelPath='titlecase_name' selected=(mut selectedStation)}}
+    <div class="col-md-4 col-sm-6">
+      {{ember-dropdown content=sortedStations optionValuePath='id' optionLabelPath='titlecase_name' prompt='Select a station name' selected=(mut selectedStation)}}
+    </div>
+    <div class="col-md-4 col-sm-6">
+      {{ember-dropdown content=dataTypes optionValuePath='id' optionLabelPath='name' prompt='Select a data type' selected=(mut selectedDataType)}}
     </div>
     <div class="col-md-3 col-sm-6">
       {{ember-dropdown content=selectValues optionValuePath='value' optionLabelPath='label' selected=(mut selectedValue)}}

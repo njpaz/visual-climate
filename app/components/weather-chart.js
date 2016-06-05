@@ -2,21 +2,24 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: ['panel', 'panel-default'],
+  dataTypes: [],
+
   dataSorting: ['date:asc'],
   sortedData: Ember.computed.sort('data', 'dataSorting'),
 
   stationSorting: ['name:asc'],
   sortedStations: Ember.computed.sort('stations', 'stationSorting'),
 
-  selectedValue: 'in_fahrenheit',
-  selectedStation: Ember.computed('sortedStations.[]', {
-    get() {
-      return this.get('sortedStations.firstObject.id');
-    },
+  obsStation: Ember.observer('selectedStation', 'selectedDataType', function() {
+    this.sendAction(this.get('getStationInfo'), this.get('selectedStation'), this.get('selectedDataType'));
+  }),
 
-    set(key, value) {
-      return value;
-    }
+  selectedValue: 'in_fahrenheit',
+  selectedStation: Ember.computed('sortedStations.[]', function(key, value) {
+    return value;
+  }),
+  selectedDataType: Ember.computed('dataTypes.[]', function(key, value) {
+    return value;
   }),
   selectedValueLabel: Ember.computed('selectedValue', function() {
     let selectedValue = this.get('selectedValue');
@@ -42,28 +45,29 @@ export default Ember.Component.extend({
     }
   }),
 
-  chartData: Ember.computed('sortedData.[]', 'selectedValue', 'selectedStation', function() {
-    const EXTREME_MIN_TEMP = 'EMNT';
-    const EXTREME_MAX_TEMP = 'EMXT';
-
-    let data = this.get('sortedData');
+  chartData: Ember.computed('sortedData.@each.id', 'selectedValue', function() {
     let selectedValue = this.get('selectedValue');
-    let stationId = this.get('selectedStation');
+    let selectedStation = this.get('selectedStation');
+    let selectedDataType = this.get('selectedDataType');
+    let dataType = this.get('dataTypes').findBy('id', selectedDataType);
+    let data = this.get('sortedData');
+    let color;
 
-    let minTemps = data.filter(function(datum) { return datum.get('data_type.identifier') === EXTREME_MIN_TEMP && datum.get('station.id') === stationId; });
-    let maxTemps = data.filter(function(datum) { return datum.get('data_type.identifier') === EXTREME_MAX_TEMP && datum.get('station.id') ===  stationId; });
+    let temps = data.filter(function(datum) { return (datum.get('data_type.id') === selectedDataType) && (datum.get('station.id') === selectedStation); });
+    let tempValues = temps.map(function(datum) { return { date: datum.get('date'), value: datum.get(selectedValue) }; });
 
-    let minDataValues = minTemps.map(function(datum) { return { date: datum.get('date'), value: datum.get(selectedValue) }; });
-    let maxDataValues = maxTemps.map(function(datum) { return { date: datum.get('date'), value: datum.get(selectedValue) }; });
+    if (dataType) {
+      dataType = dataType.get('name');
+    }
+
+    if (!Ember.isEmpty(tempValues)) {
+      color = '#000';
+    }
 
     return [{
-      name: 'Minimum',
-      color: 'blue',
-      data: minDataValues
-    }, {
-      name: 'Maximum',
-      color: 'red',
-      data: maxDataValues
+      name: dataType,
+      color: color,
+      data: tempValues
     }];
   })
 });

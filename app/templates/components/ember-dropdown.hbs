@@ -1,4 +1,5 @@
 <select class="form-control" onchange={{action (mut selected) value='target.value'}}>
+  {{#if prompt}}<option>{{prompt}}</option>{{/if}}
   {{#each content as |item|}}
     {{dropdown-option optionValuePath=optionValuePath optionLabelPath=optionLabelPath item=item selected=(is-equal selected item)}}
   {{/each}}

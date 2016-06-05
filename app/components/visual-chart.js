@@ -28,6 +28,7 @@ export default Ember.Component.extend({
     chart.selectAll('path').remove();
     chart.selectAll('circle').remove();
     chart.selectAll('.axis-label').remove();
+    chart.selectAll('.legend-text').remove();
 
     Ember.run.once(() => {
       this._initChart();
@@ -177,6 +178,7 @@ export default Ember.Component.extend({
     legend.selectAll('text')
         .data(chartData)
       .enter().append('text')
+        .attr('class', 'legend-text')
         .attr('x', (width / 3) + legendPadding)
         .attr('y', function(d, i) { return (i * (legendBoxDimension * 2)) + (legendBoxDimension - 1); })
         .text(function(d) { return d.name; });
